@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: Employee-application
+    build: ./Backend
+    ports:
+      - "3404:3404"
+    depends_on:
+      - postgres
+    environment:
+      - PGHOST=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=admin123
+      - PGDATABASE=job_applications_db
+      - PGPORT=5432
+    volumes:
+      - ./uploads:/app/Uploads
+    networks:
+      - app-network
+
+  employee-application:
+    container_name: Employee-application01
+    build: ./Employee-application
+    ports:
+      - "8306:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  hr-application:
+    container_name: HR-application
+    build: ./HR-application
+    ports:
+      - "8307:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  view-offer:
+    container_name: View-offer
+    build: ./View-offer
+    ports:
+      - "8308:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  postgres:
+    container_name: postgres001
+    image: postgres:13
+    ports:
+      - "5116:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: job_applications_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
