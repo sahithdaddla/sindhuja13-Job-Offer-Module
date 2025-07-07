@@ -5,7 +5,7 @@ services:
     container_name: Employee-application
     build: ./Backend
     ports:
-      - "3404:3404"
+      - "3209:3209"
     depends_on:
       - postgres
     environment:
@@ -23,7 +23,7 @@ services:
     container_name: Employee-application01
     build: ./Employee-application
     ports:
-      - "8306:80"
+      - "8017:80"
     depends_on:
       - backend
     networks:
@@ -33,7 +33,7 @@ services:
     container_name: HR-application
     build: ./HR-application
     ports:
-      - "8307:80"
+      - "8018:80"
     depends_on:
       - backend
     networks:
@@ -43,7 +43,7 @@ services:
     container_name: View-offer
     build: ./View-offer
     ports:
-      - "8308:80"
+      - "8019:80"
     depends_on:
       - backend
     networks:
@@ -53,7 +53,7 @@ services:
     container_name: postgres001
     image: postgres:13
     ports:
-      - "5116:5432"
+      - "5209:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin123
