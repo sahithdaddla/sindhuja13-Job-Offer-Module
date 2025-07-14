@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   backend:
-    container_name: Employee-application
+    container_name: Employee1-application
     build: ./Backend
     ports:
       - "3209:3209"
